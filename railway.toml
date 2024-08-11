@@ -1,5 +1,7 @@
-[build]
-builder = "nixpacks"
+# railway.toml
 
-[deploy]
-startCommand = "poetry run python main.py"
+[build]
+command = "poetry install --no-dev"
+
+[start]
+command = "python main.py"

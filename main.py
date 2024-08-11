@@ -1,20 +1,20 @@
+# main.py
+
+from telegram.ext import Updater, CommandHandler
+from commands import generate
 import os
-import telebot
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+def main():
+    TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+    updater = Updater(TOKEN)
+    dp = updater.dispatcher
 
-# Replace 'TELEGRAM_BOT_TOKEN' with the token you received from BotFather
-TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-bot = telebot.TeleBot(TOKEN)
+    # Register command handlers
+    dp.add_handler(CommandHandler('generate', generate))
 
-@bot.message_handler(commands=['start', 'hello'])
-def send_welcome(message):
-    bot.reply_to(message, "Hello! I'm a simple Telegram bot.")
+    # Start the bot
+    updater.start_polling()
+    updater.idle()
 
-@bot.message_handler(func=lambda msg: True)
-def echo_all(message):
-    bot.reply_to(message, message.text)
-
-bot.polling()
+if __name__ == '__main__':
+    main()
